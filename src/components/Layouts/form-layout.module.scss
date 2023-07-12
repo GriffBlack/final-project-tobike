@@ -1,0 +1,9 @@
+.form_layout{
+    nav{
+        display: flex;
+        justify-content: center;
+    }
+    .active{
+        background: var(--bg-color);
+    }
+}
