@@ -1,8 +1,10 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { client, authClient } from '../../service/client';
+import { client, authClient } from '../../services/client.js';
 
 export const fetchRegistration = createAsyncThunk(`auth/sign_up`, async (payload) => {
   const { data } = await client.post(`/auth/sign_up`, payload);
+  // const response = await client.post(`/auth/sign_up`, payload);
+  // console.log(response)
   return data;
 });
 
@@ -23,22 +25,22 @@ const initialState = {
 };
 
 const userSlice = createSlice({
-  name: 'user',
-  initialState,
-  reducers: {
-    logout: (state) => {
-      state.data = null;
-      state.status = null;
-      state.error = null;
-      localStorage.removeItem('auth-token');
+    name: 'user',
+    initialState,
+    reducers: {
+        logout: (state) => {
+            state.data = null;
+            state.status = null;
+            state.error = null;
+            localStorage.removeItem('auth-token');
+        },
     },
-  },
-  extraReducers: (builder) => {
-    builder.addCase(fetchRegistration.pending, (state) => {
-      state.data = null;
-      state.status = 'pending';
-      state.error = null;
-    });
+    extraReducers: (builder) => {
+        builder.addCase(fetchRegistration.pending, (state) => {
+            state.data = null;
+            state.status = 'pending';
+            state.error = null;
+        });
     builder.addCase(fetchRegistration.fulfilled, (state, action) => {
       state.data = action.payload;
       state.status = 'fulfilled';

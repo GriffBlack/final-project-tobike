@@ -5,6 +5,8 @@ import {
   Route,
   RouterProvider
 } from "react-router-dom";
+import { Provider } from 'react-redux';
+import store from './redux/store';
 
 import HeadLayout from './components/Layouts/HeadLayout.jsx';
 import FormLayout from './components/Layouts/FormLayout.jsx';
@@ -19,26 +21,29 @@ import NotFound from './components/NotFound.jsx';
 import './App.css';
 
 const router = createBrowserRouter(
-  createRoutesFromElements(
-    <Route path='/' element={<HeadLayout/>}>
-      <Route index element={<Home />}></Route>
-      <Route path='AuthForm' element={<FormLayout />}>
-        <Route index element={<AuthForm />}></Route>
-        <Route path='Registration' element={<Registration />}></Route>
-        {/* <Route path='UserForm' element={<UserForm />}></Route> */}
-      </Route>
-      <Route path='Cases' element={<Cases />}></Route>
-      <Route path="*" element={<NotFound />} />
-    </Route>
-  )
+    createRoutesFromElements(
+        <Route path='/' element={<HeadLayout/>}>
+        <Route index element={<Home />}></Route> 
+        <Route path='AuthForm' element={<FormLayout />}>
+            <Route index element={<AuthForm />}></Route>
+            <Route path='Registration' element={<Registration />}></Route>
+            {/* <Route path='UserForm' element={<UserForm />}></Route> */}
+        </Route>
+        <Route path='Cases' element={<Cases />}></Route>
+        <Route path="*" element={<NotFound />} />
+        </Route>
+    )
 )
 
 function App() {
-  return (
-    <div className="App">
-      <RouterProvider router={router} />
-    </div>
-  );
+    return (
+        <Provider store={store}>
+
+            <div className="App">
+                <RouterProvider router={router} />
+            </div>
+        </Provider>
+    );
 }
 
 export default App;

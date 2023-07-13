@@ -1,6 +1,8 @@
-import React from 'react';
-import {Formik, Form, Field } from 'formik';
-import { fetchRegistration } from '../../../redux/slices/userSlise';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { Formik, Form, Field } from 'formik';
+import { useNavigate } from 'react-router-dom';
+import { fetchRegistration } from '../../../redux/slices/userSlise.js';
 import * as yup from 'yup';
 
 const registrationInner = [
@@ -8,81 +10,98 @@ const registrationInner = [
   { id: 2, label: 'Фамилия', name: 'lastName', type: 'text' },
   { id: 3, label: 'Email', name: 'email', type: 'text' },
   { id: 4, label: 'Пароль', name: 'password', type: 'password' },
-  { id: 5, label: 'Client ID', name: 'clientId', type: 'text' },
+  { id: 5, label: 'Повторите пароль', name: 'confirmPassword', type: 'password' },
+  { id: 6, label: 'Client ID', name: 'clientId', type: 'text' },
 ];
+// const setInitialValues = (values) => {
+//     values.map((elem) => {
+//         return elem.name;
+//     });
+// }
 
 const registrationFormValues = {
-  firstName: '',
-  lastName: '',
-  email: '',
-  password: '',
-  clientId: '',
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+    clientId: '',
 };
 
 const registrationValidationSchema = yup.object().shape({
-  firstName: yup.string(),
-  lastName: yup.string(),
-  email: yup.string().email('Не корректный E-mail').required('Заполните поле'),
-  password: yup.string().min(8, 'Минимум 8 символов').required('Заполните поле'),
-  clientId: yup.string().required('Заполните поле'),
+    firstName: yup.string(),
+    lastName: yup.string(),
+    email: yup.string()
+        .email('Не корректный E-mail')
+        .required('Заполните поле'),
+    password: yup.string()
+        .min(8, 'Минимум 8 символов')
+        .required('Заполните поле'),
+    confirmPassword: yup.string()
+        .oneOf([yup.ref('password')], 'Пароли не совпадают')
+        .required('Заполните поле'),
+    clientId: yup.string()
+        .required('Заполните поле'),
 });
-
-  const onRegisterHandler = async (values) => {
-    dispatch(fetchRegistration(values))
-      .then((data) => {
-        if ('error' in data) {
-          setMessage('Пользователь уже зарегистрирован');
-        } else {
-          setMessage('Вы успешно зарегистрированы');
-          navigate('/login');
-        }
-      })
-      .catch(() => {
-        setMessage('Ошибка работы сервера');
-      });
-  };
-export default function Registration() {
-  return (
+export default function Registration({children}) {
+    const [message, setMessage] = useState(null);
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const onRegisterHandler = async (values) => {
+      dispatch(fetchRegistration(values))
+        .then((data) => {
+          if ('error' in data) {
+            setMessage('Пользователь уже зарегистрирован');
+          } else {
+            setMessage('Вы успешно зарегистрированы');
+            navigate('/AuthForm');
+          }
+        })
+        .catch(() => {
+          setMessage('Ошибка работы сервера');
+        });
+    };
+    // console.log(setInitialValues(registrationInner));
+    return (
+    //   <div className="reg">rert</div>
       <div className="registration">
           <h2>Registration</h2>  
               <div>
       <Formik
         initialValues={registrationFormValues}
-        onSubmit={(values) => {
-          onSubmit(values);
-        }}
-        validationSchema={validationSchema}>
+        onSubmit={onRegisterHandler}
+        validationSchema={registrationValidationSchema}>
         {({
           values,
           errors,
           touched,
           handleChange,
           handleBlur,
-          isValid = isValided,
-          dirty = isDirty,
+          isValid,
+          dirty,
         }) => (
           <Form className='form'>
-            <div className='formName'>{formName}</div>
+            <div className='formName'>formName</div>
             {registrationInner.map((el) => (
-<div className={styles.formInputWrapper}>
+<div className='formInputWrapper' key={el.id}>
       <label htmlFor={el.name}>{el.label}:</label>
-      <Field
+                    <Field
         type={el.type}
-        onBlur={el.onBlur}
-        onChange={el.onChange}
+        onBlur={handleBlur}
+        onChange={handleChange}
         name={el.name}
         value={!values[`${el.name}`] ? '' : values[`${el.name}`]}
-        className={styles.formInput}
+        className='formInput'
       />
       {touched[`${el.name}`] && errors[`${el.name}`] && (
         <p className="error-message">{errors[`${el.name}`]}</p>
       )}
     </div>
             ))}
-            {children}
-                <button disabled={!isValid && !dirty} type="submit" className={styles.formSubmit}>
-      {el.name}
-    </button>
+                            {children}
+                            <div>
+                <button disabled={!isValid || !dirty} type="submit" className="Зарегистрироваться">
+      "Зарегистрироваться"
+    </button></div>
           </Form>
         )}
       </Formik>
@@ -92,7 +111,7 @@ export default function Registration() {
           
           
           
-          <section>
+          {/* <section>
         <Form
           fields={registrationFields}
           formValues={registrationFormValues}
@@ -102,7 +121,7 @@ export default function Registration() {
           formName="Регистрация"
           message={message}
         />
-    </section>
+    </section> */}
     </div>
   )
 }
