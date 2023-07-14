@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Formik, Form, Field } from 'formik';
 import { useNavigate } from 'react-router-dom';
 import { fetchRegistration } from '../../../redux/slices/userSlise.js';
 import * as yup from 'yup';
+
+import FormInput from '../../FormInput/FormInput.jsx';
+
 
 const registrationInner = [
   { id: 1, label: 'Имя', name: 'firstName', type: 'text' },
@@ -19,7 +21,7 @@ const registrationInner = [
 //     });
 // }
 
-const registrationFormValues = {
+const registrationValues = {
     firstName: '',
     lastName: '',
     email: '',
@@ -64,10 +66,17 @@ export default function Registration({children}) {
     return (
     //   <div className="reg">rert</div>
       <div className="registration">
-          <h2>Registration</h2>  
-              <div>
-      <Formik
-        initialValues={registrationFormValues}
+            <h2>Регистрация</h2>
+            <FormInput
+                logginHandler={onRegisterHandler}
+                registrationValidationSchema={registrationValidationSchema}
+                authInner={registrationInner}
+                initialValues={registrationValues}
+                btnName='Зарегистрироваться'
+            />
+              {/* <div> */}
+      {/* <Formik
+        initialValues={registrationValues}
         onSubmit={onRegisterHandler}
         validationSchema={registrationValidationSchema}>
         {({
@@ -106,7 +115,7 @@ export default function Registration({children}) {
         )}
       </Formik>
       {message && <p className="process-message">{message}</p>}
-    </div>
+    </div> */}
           
           
           

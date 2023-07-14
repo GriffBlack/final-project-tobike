@@ -21,6 +21,25 @@ export const fetchAuth = createAsyncThunk(
     }
 )
 
+export const fetchAccec = createAsyncThunk(`auth`,
+    // const { data } = await authClient().get(`/auth`);
+        async function (payload, {rejectWithValue}) {
+        try {
+            const { data } = await client.post(`/auth/sign_in`, payload);
+            if (data.status !== 'OK') 
+                throw new Error('Server Error!')
+            setToken(data.data.token);
+            console.log(payload);
+            // console.log(data);
+            // window.localStorage.setItem('token', data.data.token)
+            return data
+        } catch (err) {
+            return rejectWithValue(err.message);
+        }
+//     console.log(data);
+//   return data;
+});
+
 const authSlice = createSlice({
     name: 'authorization',
     initialState: {
@@ -44,6 +63,21 @@ const authSlice = createSlice({
             .addCase(fetchAuth.rejected, (state, action) => {
                 state.status = 'rejected';
                 state.error = action.payload;
+            })
+            .addCase(fetchAccec.pending, (state) => {
+            state.data = null;
+            state.status = 'pending';
+            state.error = null;
+            })
+            .addCase(fetchAccec.fulfilled, (state, action) => {
+            state.data = action.payload;
+            state.status = 'fulfilled';
+            state.error = null;
+            })
+            .addCase(fetchAccec.rejected, (state, action) => {
+            state.data = null;
+            state.status = 'rejected';
+            state.error = action.error.message;
             })
         // [axiosAuth.fulfilled]: (state, action) => {
         //     state.status = 'resolved';

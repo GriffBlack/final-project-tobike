@@ -8,6 +8,24 @@ header {
     // justify-content: center;
 }
 /* navbar */
+.logout{
+      border: medium none;
+  background-image: none; 
+  background: transparent;
+  float: left;
+  background-color: transparent;
+        box-sizing: border-box;
+      height: 33px;
+        font-size: 20px;
+        color: black;
+        text-decoration: none;
+        padding: 0 10px;
+        border-radius: 4px;
+        margin-right: 20px;
+}
+.logout:hover{
+    cursor: pointer;
+}
 .head_layout {
 
     box-sizing: border-box;

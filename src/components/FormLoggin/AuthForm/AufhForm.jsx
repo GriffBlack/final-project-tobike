@@ -1,9 +1,9 @@
 import React from 'react';
-import { Field, Form, Formik } from 'formik';
 import * as yup from 'yup';
 import { useNavigate } from 'react-router-dom';
-import {getToken} from '../../../services/token'
+import { getToken } from '../../../services/token'
 
+import FormInput from '../../FormInput/FormInput.jsx';
 import { useDispatch, useSelector } from 'react-redux';
 import {fetchAuth} from '../../../redux/slices/authSlice'
 const authInner = [
@@ -11,8 +11,11 @@ const authInner = [
     { id: 2, label: 'Пароль', name: 'password', type: 'password'},
 ]
  
-
-const registrationValidationSchema = yup.object().shape({
+const authValues = {
+    email: '',
+    password: ''
+};
+const authValidationSchema = yup.object().shape({
     email: yup.string()
         .email('Не корректный E-mail')
         .required('Заполните поле'),
@@ -41,11 +44,19 @@ export default function AuthForm() {
 }
     return (
         <div className="auth-form">
+            <h2>Войдите</h2>
+            <FormInput
+                initialValues={authValues}
+                logginHandler={logginHandler}
+                registrationValidationSchema={authValidationSchema}
+                authInner={authInner}
+                btnName='Войти'
+            />
             {/* {console.log(authInner.map((elem) => {
                     return elem.name + ': "",';
             }))}
             {console.log(authInner)} */}
-            <Formik
+            {/* <Formik
                 initialValues=
                 {{
                     email: '',
@@ -83,8 +94,8 @@ export default function AuthForm() {
                         <button disabled={!isValid || !dirty}>Войти</button>
                     </Form>
                 )}
-            </Formik>
-            {user && console.log(user)}
+            </Formik> */}
+            {/* {user && console.log(user)} */}
             {error && <p className="process-message">{error}</p>}
         </div>
     )
