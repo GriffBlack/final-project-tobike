@@ -1,50 +1,23 @@
-import { Formik, Form, Field } from 'formik'
+import { Field } from 'formik';
+import styles from './formInput.module.scss';
 
-import css from './form-input.module.scss';
+const FormInput = ({ label, name, onBlur, onChange, values, touched, errors, type }) => {
+  return (
+    <div className={styles.formInputWrapper}>
+      <label htmlFor={name}>{label}:</label>
+      <Field
+        type={type}
+        onBlur={onBlur}
+        onChange={onChange}
+        name={name}
+        value={!values[`${name}`] ? '' : values[`${name}`]}
+        className={styles.formInput}
+      />
+      {touched[`${name}`] && errors[`${name}`] && (
+        <p className="error-message">{errors[`${name}`]}</p>
+      )}
+    </div>
+  );
+};
 
-export default function FormInput({
-    logginHandler,
-    registrationValidationSchema,
-    authInner,
-    btnName,
-    initialValues,
-}) {
-    return (
-            <Formik
-                initialValues={initialValues}
-                onSubmit={logginHandler}
-                validationSchema={registrationValidationSchema}
-            >
-                {({
-                    values,
-                    errors,
-                    touched,
-                    handleChange,
-                    handleBlur,
-                    isValid,
-                    dirty,
-                }) => (
-                    <Form className={css.form}>
-                        {authInner.map((elem) => (
-                            <div className={css.formWrapper} key={elem.id}>
-                                <label htmlFor={elem.name}>{elem.label}</label>
-                                <Field
-                                    type={elem.type}
-                                    name={elem.name}
-                                    className={css.formName}
-                                    // onBlur={handleBlur}
-                                    onChange={handleChange}
-                                    // values={`${elem.name}`}
-                                    ></Field>
-                                {touched[`${elem.name}`] && errors[`${elem.name}`] &&
-                                (
-                                    <p className={css.errorMessage}>{errors[`${elem.name}`]}</p>
-                                )}
-                            </div>
-                        ))}
-                        <button className={css.btnInput} disabled={!isValid || !dirty}>{btnName}</button>
-                    </Form>
-                )}
-            </Formik>
-        )
-    }
+export default FormInput;
