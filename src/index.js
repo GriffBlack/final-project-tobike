@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './redux/store';
-import Layout from './components/Layout/Layout';
+import Layout from './components/Layouts/HeadLayout';
 import Spinner from './components/Spinner/Spinner';
 import { Routes, Route } from 'react-router-dom';
 import { getToken } from './service/token';
@@ -25,35 +25,37 @@ if (getToken()) store.dispatch(fetchMe());
 
 root.render(
   <BrowserRouter>
-    <Provider store={store}>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          {[
-            { path: '/', component: Home },
-            { path: '/registration', component: Auth, type: 'registration' },
-            { path: '/login', component: Auth, type: 'login' },
-            { path: '/report', component: Report },
-            { path: '/reports', component: Reports },
-            { path: '/reports/:id', component: Details, type: 'reports' },
-            { path: '/reports/edit/:id', component: Report },
-            { path: '/officers', component: Officers },
-            { path: '/officers/:id', component: Details, type: 'officers' },
-            { path: '/officers/create', component: OfficersForm },
-            { path: '/officers/edit/:id', component: OfficersForm },
-            { path: '*', component: NotFound },
-          ].map(({ path, component: Component, type }) => (
-            <Route
-              key={path}
-              path={path}
-              element={
-                <Suspense fallback={<Spinner />}>
-                  <Component type={type} />
-                </Suspense>
-              }
-            />
-          ))}
-        </Route>
-      </Routes>
+        <Provider store={store}>
+            <div className='App'>
+                <Routes>
+                    <Route path="/" element={<Layout />}>
+                    {[
+                        { path: '/', component: Home },
+                        { path: '/registration', component: Auth, type: 'registration' },
+                        { path: '/login', component: Auth, type: 'login' },
+                        { path: '/report', component: Report },
+                        { path: '/reports', component: Reports },
+                        { path: '/reports/:id', component: Details, type: 'reports' },
+                        { path: '/reports/edit/:id', component: Report },
+                        { path: '/officers', component: Officers },
+                        { path: '/officers/:id', component: Details, type: 'officers' },
+                        { path: '/officers/create', component: OfficersForm },
+                        { path: '/officers/edit/:id', component: OfficersForm },
+                        { path: '*', component: NotFound },
+                    ].map(({ path, component: Component, type }) => (
+                        <Route
+                        key={path}
+                        path={path}
+                        element={
+                            <Suspense fallback={<Spinner />}>
+                            <Component type={type} />
+                            </Suspense>
+                        }
+                        />
+                    ))}
+                    </Route>
+                </Routes>
+            </div>
     </Provider>
   </BrowserRouter>,
 );

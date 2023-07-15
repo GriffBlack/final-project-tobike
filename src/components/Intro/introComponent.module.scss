@@ -1,8 +1,10 @@
 .introComponent {
-  margin-top: 160px;
+  margin-top: 20px;
   display: flex;
   justify-content: space-between;
-
+    // padding: 0 20px;
+    align-items: center;
+    flex-direction: column-reverse;
   &Left {
     max-width: 600px;
     width: 100%;

@@ -1,0 +1,23 @@
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: var(--top);
+    height: 55px;
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+    
+    .wrapperFooter {
+        max-width: 1235px;
+
+    }
+    .wrapperFooter span {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        margin: auto 20px;
+        border-bottom: 3px solid var(--primary);
+    }
+}
