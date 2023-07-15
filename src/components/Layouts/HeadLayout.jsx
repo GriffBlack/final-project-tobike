@@ -1,19 +1,12 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import { Outlet, NavLink } from "react-router-dom"
 import Footer from './Footer/Footer.jsx'
 import { useDispatch, useSelector } from 'react-redux';
-import { removeToken, setToken, getToken } from '../../service/token.js';
-// import Breadcrumbs from "../components/Breadcrumbs"
+import { removeToken } from '../../service/token.js';
 import './head-layout.scss'
 import { useNavigate } from 'react-router-dom';
-import { fetchAccec, logout } from '../../redux/user/userSlice.js';
+import { logout } from '../../redux/user/userSlice.js';
 
-//     if (getToken()) {
-//     // console.log(store.dispatch);
-// //state проверяй
-//     store.dispatch(fetchAccec());
-//     console.log("store")
-// };
 
 export default function RootLayout() {
     const user = useSelector(state => state.user);
@@ -21,11 +14,7 @@ export default function RootLayout() {
     const dispatch = useDispatch();
     const onLogout = () => {
         removeToken();
-        console.log(12)
         dispatch(logout(user));
-        // dispatch(logout);
-        // user.status = 
-        console.log(user.status)
         navigate('/');
     };
     return (
