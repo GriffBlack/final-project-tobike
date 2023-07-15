@@ -26,7 +26,10 @@ export default function RootLayout() {
                     {user.status === "fulfilled" && <NavLink to="/officers">Сотрудники</NavLink>}       
                     {user.status === "fulfilled" && <NavLink to="/reports">Заявления</NavLink>}       
                     <NavLink to="/report">Сообщить о краже</NavLink>
-                    {user.status !== "fulfilled" ? <NavLink to="/login">Войти</NavLink> : <NavLink onClick={onLogout} to="/login">Выйти</NavLink>}
+                    {user.status !== "fulfilled" && <NavLink to="/login">Войти</NavLink>}
+                    {user.status !== "fulfilled" && <NavLink to="/registration">Регистрация</NavLink>}
+                    {user.status === "fulfilled" && <NavLink onClick={onLogout} to="/login">Выйти</NavLink>}
+                    
                 </nav>
             </header>
             <main>
