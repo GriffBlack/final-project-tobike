@@ -35,8 +35,6 @@ export default function RootLayout() {
             <main>
                 <div className="wrapper">
                     {user.status === 'loading' && <h2>Loading...</h2>}
-        
-                    {console.log(user.status)}
                     <Outlet />
                 </div>
             </main>
