@@ -3,7 +3,40 @@
         display: flex;
         justify-content: center;
     }
+    h2 {
+        // margin: auto auto 0 20px;
+        // margin-right: 0;
+        // margin-left: 0;
+        // margin-inline-start: auto;
+        box-sizing: border-box;
+
+        justify-content: center;
+        display: flex;
+
+        // padding: 10px;
+        border-bottom: 3px solid var(--primary);
+        border-radius: 4px;
+    }
+    a{  
+        box-sizing: border-box;
+        height: 33px;
+        font-size: 20px;
+        color: black;
+        text-decoration: none;
+        padding: 0 10px;
+        border-radius: 4px;
+        margin-top: 30px;
+        // align-items: center;
+
+    }
+    a:hover {
+        color: black;
+                border-bottom: 3px solid var(--primary);
+
+    }
     .active{
         background: var(--bg-color);
+        border-bottom: 3px solid var(--primary);
+        border-radius: 0;
     }
 }

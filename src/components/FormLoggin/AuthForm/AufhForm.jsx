@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import * as yup from 'yup';
 import { useNavigate } from 'react-router-dom';
 import { getToken } from '../../../services/token'
@@ -22,25 +22,26 @@ const authValidationSchema = yup.object().shape({
     password: yup.string()
         .required('Заполните поле'),
 });
-// const setInitialValues = (values) => {
-//     values.map((elem) => {
-//         // Object.entries(elem).map((key, value) => [key, value])
-//         // console.log(elem);
-//         return elem.name;
-//         // return elem.name + ': "",';
-//     }).reducer((acc, arr) => return acc:);
-// }
 
 export default function AuthForm() {
+    const [message, setMessage] = useState(null);
     const { status, error, user } = useSelector(state => state.user)
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const logginHandler = async (data) => {
-        // console.log(data);
-        dispatch(fetchAuth(data));
-        // console.log(auth);
-        navigate('/');
-        
+        dispatch(fetchAuth(data))
+            .then((data) => {
+            if ('error' in data) {
+            setMessage('Введены неверные данные');
+            } else {
+            setMessage('Вы авторизованы');
+            navigate('/');
+            }
+        })
+        .catch(() => {
+            setMessage('Ошибка работы сервера');
+        });
+
 }
     return (
         <div className="auth-form">
@@ -52,51 +53,7 @@ export default function AuthForm() {
                 authInner={authInner}
                 btnName='Войти'
             />
-            {/* {console.log(authInner.map((elem) => {
-                    return elem.name + ': "",';
-            }))}
-            {console.log(authInner)} */}
-            {/* <Formik
-                initialValues=
-                {{
-                    email: '',
-                    password: '',
-                }}
-                onSubmit={logginHandler}
-                validationSchema={registrationValidationSchema}
-            >
-                {({
-                    values,
-                    errors,
-                    touched,
-                    handleChange,
-                    handleBlur,
-                    isValid,
-                    dirty,
-                }) => (
-                    <Form className='formAuth'>
-                        {authInner.map((elem) => (
-                            <div className="formWrapper" key={elem.id}>
-                                <label htmlFor={elem.name}>{elem.label}</label>
-                                <Field
-                                    type={elem.type}
-                                    name={elem.name}
-                                    className='formInput'
-                                    // onBlur={handleBlur}
-                                    onChange={handleChange}
-                                    // values={`${elem.name}`}
-                                ></Field>
-                                {touched[`${elem.name}`] && errors[`${elem.name}`] && (
-                                    <p className="error-message">{errors[`${elem.name}`]}</p>
-                                )}
-                            </div>
-                        ))}
-                        <button disabled={!isValid || !dirty}>Войти</button>
-                    </Form>
-                )}
-            </Formik> */}
-            {/* {user && console.log(user)} */}
-            {error && <p className="process-message">{error}</p>}
+            {error && <p className="processMessage">{message}</p>} 
         </div>
     )
 }

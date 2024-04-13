@@ -1,7 +1,7 @@
 import { authClient } from './client';
 
 const getOfficers = async () => {
-  const { data } = await authClient().get(`/officers`, null);
+    const { data } = await authClient().get(`/officers`, null);
   return data;
 };
 
