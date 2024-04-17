@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { BeatLoader } from 'react-spinners';
 import { useNavigate, Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { checkAuth } from '../../utils/checkAuth';
@@ -43,7 +44,7 @@ const Officers = () => {
             </>)
     } else if (message) {
         content = <p className="error-message">Ошибка при получении данных сотрудника</p>
-    } else {content = <h2>Loading...</h2>}
+    } else {content = <BeatLoader color="var(--primary)" />}
     return content;
     // return (
     //     <section>
