@@ -1,8 +1,16 @@
-.form_layout{
-    nav{
+.form_layout {
+    .BeatLoader {
+        display: 'flex';
+        justify-content: 'center';
+        align-items: 'center';
+        height: '100%';
+    }
+
+    nav {
         display: flex;
         justify-content: center;
     }
+
     h2 {
         // margin: auto auto 0 20px;
         // margin-right: 0;
@@ -17,12 +25,13 @@
         border-bottom: 3px solid var(--primary);
         border-radius: 4px;
         // display: flex;
-    // justify-content: flex-end;
-    align-items: center;
-    margin: auto 20px;
-    // border-bottom: 3px solid var(--primary);
+        // justify-content: flex-end;
+        align-items: center;
+        margin: auto 20px;
+        // border-bottom: 3px solid var(--primary);
     }
-    a{  
+
+    a {
         box-sizing: border-box;
         height: 33px;
         font-size: 20px;
@@ -34,12 +43,14 @@
         // align-items: center;
 
     }
+
     a:hover {
         color: black;
-                border-bottom: 3px solid var(--primary);
+        border-bottom: 3px solid var(--primary);
 
     }
-    .active{
+
+    .active {
         background: var(--bg-color);
         border-bottom: 3px solid var(--primary);
         border-radius: 0;

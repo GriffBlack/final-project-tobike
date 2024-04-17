@@ -4,6 +4,7 @@ import Footer from './Footer/Footer.jsx'
 import { useDispatch, useSelector } from 'react-redux';
 import { removeToken, setToken, getToken } from '../../services/token.js';
 // import Breadcrumbs from "../components/Breadcrumbs"
+import { BeatLoader } from 'react-spinners';
 import './head-layout.scss'
 import { useNavigate } from 'react-router-dom';
 import { fetchAccec, logout } from '../../redux/slices/authSlice.js';
@@ -39,7 +40,7 @@ export default function RootLayout() {
         if (getToken()) {
             dispatch(fetchAccec());
         }
-    },[null]);
+    });
     // let contr = true;
     return (
         <div className='head_layout'>
@@ -53,12 +54,17 @@ export default function RootLayout() {
                     {/* <NavLink to="officers">Сотрудники</NavLink>
                     <NavLink to="cases">Заявления</NavLink> */} 
                     <NavLink to="Cases">Сообщить о краже</NavLink>
-                    {user.status !== "resolved" ? <NavLink to="AuthForm">Войти</NavLink> : <button className='logout' onClick={onLogout}>Выйти</button>}
+                    {user.status !== "resolved" ?
+                        <NavLink to="AuthForm">Войти</NavLink> :
+                        <button className='logout' onClick={onLogout}>
+                            Выйти
+                        </button>
+                    }
                 </nav>
             </header>
             <main>
                 <div className="wrapper">
-                    {user.status === 'loading' && <h2>Loading...</h2>}
+                    {user.status === 'loading' && <BeatLoader color="var(--primary)" />}
                     <Outlet />
                 </div>
             </main>
