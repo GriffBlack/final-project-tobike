@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import {
-  createBrowserRouter,
-  createRoutesFromElements,
-  Route,
-  RouterProvider
+    createBrowserRouter,
+    createRoutesFromElements,
+    Route,
+    RouterProvider
 } from "react-router-dom";
 import { Provider } from 'react-redux';
 
@@ -22,6 +22,7 @@ import Cases from './components/Cases/Cases.jsx';
 import NotFound from './components/NotFound.jsx';
 import OfficerInner from './components/OfficerInner/OficerInner.jsx';
 import Details from './components/Details/Details.jsx';
+
 import './App.css';
 
 // if (getToken()) {
@@ -33,18 +34,18 @@ import './App.css';
 
 const router = createBrowserRouter(
     createRoutesFromElements(
-        <Route path='/' element={<HeadLayout/>}>
-        <Route index element={<Home />}></Route> 
-        <Route path='officers' element={<Officers />}></Route>
-        <Route path={`/officers/:id`} type= 'officers' element={<Details />}></Route>
-        <Route path='authForm' element={<FormLayout />}>
-            <Route index element={<AuthForm />}></Route>
-            <Route path='registration' element={<Registration />}></Route>
-            
-            {/* <Route path='UserForm' element={<UserForm />}></Route> */}
-        </Route>
-        <Route path='cases' element={<Cases />}></Route>
-        <Route path="*" element={<NotFound />} />
+        <Route path='/' element={<HeadLayout />}>
+            <Route index element={<Home />}></Route>
+            <Route path='officers' element={<Officers />}></Route>
+            <Route path={`/officers/:id`} type='officers' element={<Details />}></Route>
+            <Route path='authForm' element={<FormLayout />}>
+                <Route index element={<AuthForm />}></Route>
+                <Route path='registration' element={<Registration />}></Route>
+
+                {/* <Route path='UserForm' element={<UserForm />}></Route> */}
+            </Route>
+            <Route path='cases' element={<Cases />}></Route>
+            <Route path="*" element={<NotFound />} />
         </Route>
     )
 )

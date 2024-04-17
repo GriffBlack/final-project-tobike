@@ -48,8 +48,10 @@ export default function RootLayout() {
                 <nav>
                     <h1>toBiker</h1>
                     <NavLink to="/">Home</NavLink>
-                    {user.status === "resolved" && <NavLink to="officers">Сотрудники</NavLink>}       
-                    {user.status === "resolved" && <NavLink to="cases">Заявления</NavLink>}       
+                    {user.status === "resolved" && <NavLink to="officers">Сотрудники</NavLink>}
+                    {user.status === "resolved" && <NavLink to="cases">Заявления</NavLink>}
+                    {/* <NavLink to="officers">Сотрудники</NavLink>
+                    <NavLink to="cases">Заявления</NavLink> */} 
                     <NavLink to="Cases">Сообщить о краже</NavLink>
                     {user.status !== "resolved" ? <NavLink to="AuthForm">Войти</NavLink> : <button className='logout' onClick={onLogout}>Выйти</button>}
                 </nav>
